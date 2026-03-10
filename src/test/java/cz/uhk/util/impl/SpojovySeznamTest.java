@@ -7,13 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class SpojovySeznamTest {
     Seznam<Integer> seznam;
 
     @BeforeEach
     void setupData() {
-       SpojovySeznam seznam = new SpojovySeznam<>();
+        seznam = new SpojovySeznam<>();
     }
 
     @Test
@@ -52,54 +51,6 @@ class SpojovySeznamTest {
     void pocet() {
         assertEquals(0,seznam.pocet(), "pocet - prazdny seznam");
         initData();
-        assertEquals(0,seznam.pocet(), "pocet - 2 prvky");
-    }
-
-    @Test
-    void testPridej() {
-    }
-
-    @Test
-    void testSmaz() {
-    }
-
-    @Test
-    void testVrat() {
-    }
-
-    @Test
-    void testPocet() {
-    }
-
-    @Test
-    void testPridej1() {
-    }
-
-    @Test
-    void testSmaz1() {
-    }
-
-    @Test
-    void testVrat1() {
-    }
-
-    @Test
-    void testPocet1() {
-    }
-
-    @Test
-    void testPridej2() {
-    }
-
-    @Test
-    void testSmaz2() {
-    }
-
-    @Test
-    void testVrat2() {
-    }
-
-    @Test
-    void testPocet2() {
+        assertEquals(4,seznam.pocet(), "pocet - 2 prvky");
     }
 }
