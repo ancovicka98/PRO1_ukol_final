@@ -8,7 +8,7 @@ public class SpojovySeznam<E> implements Seznam<E> {
 
     private PrvekSeznamu<E> prvni;
     private PrvekSeznamu<E> posledni;
-    private int velikost = 0; // Musíš mít tento atribut, aby image_8a51d2.png fungoval
+    private int velikost = 0;
 
     @Override
     public void pridej(E prvek) {
@@ -25,7 +25,6 @@ public class SpojovySeznam<E> implements Seznam<E> {
 
     @Override
     public void smaz(int pozice) {
-        // Kontrola mezí z tvého screenshotu
         if (pozice < 0 || pozice >= velikost) throw new IndexOutOfBoundsException();
 
         if (pozice == 0) {
@@ -53,20 +52,16 @@ public class SpojovySeznam<E> implements Seznam<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            // Začneme od prvního prvku
             private PrvekSeznamu<E> aktualni = prvni;
 
             @Override
             public boolean hasNext() {
-                // Máme další prvek, pokud aktuální není null
                 return aktualni != null;
             }
 
             @Override
             public E next() {
-                // Uložíme si hodnotu, kterou budeme vracet
                 E hodnota = aktualni.hodnota;
-                // Posuneme se na další prvek v řetězci
                 aktualni = aktualni.dalsi;
                 return hodnota;
             }
@@ -85,8 +80,8 @@ public class SpojovySeznam<E> implements Seznam<E> {
 
 
 class PrvekSeznamu<E> {
-    E hodnota; // [cite: 27]
-    PrvekSeznamu<E> dalsi; // [cite: 27]
+    E hodnota;
+    PrvekSeznamu<E> dalsi;
 
     public PrvekSeznamu(E hodnota) {
         this.hodnota = hodnota;
