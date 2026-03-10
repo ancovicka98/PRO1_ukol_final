@@ -19,7 +19,21 @@ class SpojovySeznamTest {
     void pridej() {
         initData();
         assertEquals(4, seznam.pocet());
+        seznam.pridej(25,3);
+        assertEquals(5, seznam.pocet());
+        assertEquals(25, seznam.vrat(3));
+        seznam.pridej(55,5);
+        assertEquals(6, seznam.pocet());
+        assertEquals(55, seznam.vrat(5));
+        seznam.pridej(55,-1);
+        assertEquals(7, seznam.pocet());
+        assertEquals(55, seznam.vrat(0));
+        seznam.pridej(100,12);
+        assertEquals(8, seznam.pocet());
+        assertEquals(100, seznam.vrat(7));
     }
+
+
 
     @Test
     void smaz() {
