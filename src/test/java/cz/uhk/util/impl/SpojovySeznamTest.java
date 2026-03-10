@@ -33,8 +33,6 @@ class SpojovySeznamTest {
         assertEquals(100, seznam.vrat(7));
     }
 
-
-
     @Test
     void smaz() {
         initData();
@@ -57,6 +55,9 @@ class SpojovySeznamTest {
         assertEquals(10, seznam.vrat(0));
         assertEquals(20, seznam.vrat(1));
         assertEquals(40, seznam.vrat(seznam.pocet()-1));
+        assertNull(seznam.vrat(100), "Pozice mimo rozsah");
+        assertNull(seznam.vrat(-100), "Pozice mimo rozsah");
+
 
     }
 

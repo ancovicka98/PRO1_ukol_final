@@ -1,26 +1,22 @@
 package cz.uhk.util.impl;
 
 import cz.uhk.util.Seznam;
+
 import java.util.Iterator;
 
+//genericka trida spojoveho linearniho seznamu
 public class SpojovySeznam<E> implements Seznam<E> {
-
-
-    private PrvekSeznamu<E> prvni;
-    private PrvekSeznamu<E> posledni;
-    private int velikost = 0;
+    private PrvekSeznamu<E> prvni, posledni;
 
     @Override
-    public void pridej(E prvek) {
-        PrvekSeznamu<E> novy = new PrvekSeznamu<>(prvek);
-        if (prvni == null) {
-            prvni = novy;
-            posledni = novy;
-        } else {
+    public void pridej(E hodnota) {
+        var novy = new PrvekSeznamu<E>(hodnota);
+        if (prvni == null){
+            prvni = posledni = novy;
+        }else{
             posledni.dalsi = novy;
-            posledni = novy;
+            posledni = posledni.dalsi;
         }
-        velikost++;
     }
 
     @Override
@@ -43,69 +39,71 @@ public class SpojovySeznam<E> implements Seznam<E> {
         }
     }
 
-
-    }
     @Override
     public void smaz(int pozice) {
-        if (pozice < 0 || pozice >= velikost) throw new IndexOutOfBoundsException();
-
-        if (pozice == 0) {
+        if (pozice == 0){
             prvni = prvni.dalsi;
-            if (prvni == null) posledni = null;
-        } else {
-            PrvekSeznamu<E> predchozi = najdiPrvek(pozice - 1);
-            predchozi.dalsi = predchozi.dalsi.dalsi;
-            if (predchozi.dalsi == null) {
-                posledni = predchozi;
+        }else {
+            var predchozi = vratPrvek(pozice - 1);
+            if (predchozi != null){
+                predchozi.dalsi = predchozi.dalsi.dalsi;
             }
         }
-        velikost--;
+
     }
 
     @Override
     public E vrat(int pozice) {
-        return najdiPrvek(pozice).hodnota;
+        PrvekSeznamu<E> prvek = vratPrvek(pozice);
+        return (prvek != null) ? prvek.hodnota : null;
+    }
+
+    private PrvekSeznamu<E> vratPrvek(int pozice) {
+        if (pozice <0){
+            return null;
+        }
+        var pom = prvni;
+        for(int i = 0; i < pozice && pom != null; i++){
+            pom = pom.dalsi;
+        }
+        return pom;
     }
 
     @Override
     public int pocet() {
-        return velikost;
+        var pocet = 0;
+        for (var pom = prvni;pom != null; pocet ++){
+            pom = pom.dalsi;
+        }
+        return pocet;
     }
+
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private PrvekSeznamu<E> aktualni = prvni;
-
+            PrvekSeznamu<E> aktualni = prvni;
             @Override
             public boolean hasNext() {
-                return aktualni != null;
+                return aktualni != null && aktualni.dalsi != null;
             }
 
             @Override
             public E next() {
-                E hodnota = aktualni.hodnota;
+                if (aktualni == null)return null;
                 aktualni = aktualni.dalsi;
-                return hodnota;
+                return (aktualni != null) ? aktualni.hodnota : null;
             }
         };
     }
-
-
-    private PrvekSeznamu<E> najdiPrvek(int pozice) {
-        PrvekSeznamu<E> aktualni = prvni;
-        for (int i = 0; i < pozice; i++) {
-            aktualni = aktualni.dalsi;
-        }
-        return aktualni;
-    }
 }
 
+class PrvekSeznamu<T> {
+    T hodnota;
+    PrvekSeznamu<T> dalsi;
 
-class PrvekSeznamu<E> {
-    E hodnota;
-    PrvekSeznamu<E> dalsi;
-
-    public PrvekSeznamu(E hodnota) {
+    public PrvekSeznamu(T hodnota) {
         this.hodnota = hodnota;
     }
 }
+
